@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  redis-master:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/redis
+    ports:
+    - "6379:6379"
+    volumes:
+    - /data/redis/master:/data
+    command: redis-server /data/redis.conf
+  redis-slaver:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/redis
+    ports:
+    - "6380:6379"
+    volumes:
+    - /data/redis/slaver:/data
+    command: redis-server /data/redis.conf --slaveof redis-master 6379
+    links:
+    - redis-master
+  redis-sentinel:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/redis
+    ports:
+    - "6381:6379"
+    volumes:
+    - /data/redis/sentinel:/data
+    command: redis-server /data/redis.conf --sentinelhost
+    links:
+    - redis-master
+    - redis-slaver

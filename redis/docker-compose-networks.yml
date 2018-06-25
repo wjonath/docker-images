@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+  redis-master:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/redis
+    container_name: redis-master
+    ports:
+    - "6379:6379"
+    volumes:
+    - /data/redis/master:/data
+    command: redis-server /data/redis.conf
+    networks:
+      app_net:
+        ipv4_address: 172.23.0.79
+  redis-slaver:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/redis
+    container_name: redis-slaver
+    ports:
+    - "6380:6379"
+    volumes:
+    - /data/redis/slaver:/data
+    command: redis-server /data/redis.conf
+    networks:
+      app_net:
+        ipv4_address: 172.23.0.80
+  redis-sentinel:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/redis
+    container_name: redis-sentinel
+    ports:
+    - "6381:6379"
+    volumes:
+    - /data/redis/sentinel:/data
+    command: redis-server /data/redis.conf --sentinel
+    networks:
+      app_net:
+        ipv4_address: 172.23.0.81
+        
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.23.0.0/24
+        gateway: 172.23.0.1

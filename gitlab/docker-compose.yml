@@ -1,0 +1,9 @@
+version: '2'
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:10.6.6-ce.0
+    container_name: gitlab
+    ports:
+    - "8605:80"
+    - "50022:22"
+    - "50443:443"

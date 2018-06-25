@@ -1,0 +1,7 @@
+version: '2'
+services:
+  dokuwiki:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/dokuwiki
+    container_name: dokuwiki
+    ports:
+    - "8606:80"

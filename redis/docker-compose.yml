@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  redis-master:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/redis
+    volumes:
+    - /data/redis/master:/data
+    command: redis-server /data/redis.conf
+    network_mode: host
+    extra_hosts:
+    - "redis-master:192.168.11.129"
+  redis-slaver:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/redis
+    volumes:
+    - /data/redis/slaver:/data
+    command: redis-server /data/redis.conf --port 6380 --slaveof redis-master 6379
+    network_mode: host
+    extra_hosts:
+    - "redis-master:192.168.11.129"
+  redis-sentinel:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/redis
+    volumes:
+    - /data/redis/sentinel:/data
+    command: redis-server /data/redis.conf --port 6381 --sentinel
+    network_mode: host
+    extra_hosts:
+    - "redis-master:192.168.11.129"

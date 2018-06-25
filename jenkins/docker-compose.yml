@@ -1,0 +1,8 @@
+version: '2'
+services:
+  jenkins:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/jenkins
+    container_name: jenkins
+    ports:
+    - "8600:8600"
+    - "50000:50000"

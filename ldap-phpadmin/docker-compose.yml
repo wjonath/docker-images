@@ -1,0 +1,23 @@
+version: "2"
+
+services:
+  ldap-server:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/ldap-server
+    container_name: ldap-server
+    ports:
+    - "389:389"
+    environment:
+      SLAPD_PASSWORD: admin
+      SLAPD_DOMAIN: example.com
+      SLAPD_FULL_DOMAIN: dc=example,dc=com
+  ldap-phpadmin:
+    image: registry.cn-shenzhen.aliyuncs.com/jonath/ldap-phpadmin
+    container_name: ldap-phpadmin
+    ports: 
+    - "8608:80"
+    - "5380:5380"
+    environment:
+      LDAP_SERVER_BASE_DN: dc=example,dc=com
+      LDAP_SERVER_BIND_ID: cn=admin,dc=example,dc=com
+      LDAP_SERVER_HOST: 192.168.11.129
+
