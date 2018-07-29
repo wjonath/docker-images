@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  nexus:
+  gogs:
     image: gogs/gogs
     container_name: gogs
     volumes:
